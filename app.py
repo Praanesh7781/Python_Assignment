@@ -50,43 +50,43 @@ def evaluate_model(rf_classifier, X_test_vect, y_test):
     return report, matrix
 
 def main():
-    st.title("Fake News Detection")
-    
-    st.sidebar.title("Navigation")
+    # Instead of selectbox, use radio to create a navigation pane
+st.sidebar.title("Navigation")
 option = st.sidebar.radio("Go to", ("Train Model", "Evaluate Model", "Predict News"))
 
-    if option == "Train Model":
-        st.write("Training the model...")
-        rf_classifier, tfidf_vectorizer, X_test_vect, y_test = train_model()
-        joblib.dump(rf_classifier, 'random_forest_model.pkl')
-        joblib.dump(tfidf_vectorizer, 'tfidf_vectorizer.pkl')
-        st.write("Model trained and saved successfully!")
+if option == "Train Model":
+    st.write("Training the model...")
+    rf_classifier, tfidf_vectorizer, X_test_vect, y_test = train_model()
+    joblib.dump(rf_classifier, 'random_forest_model.pkl')
+    joblib.dump(tfidf_vectorizer, 'tfidf_vectorizer.pkl')
+    st.write("Model trained and saved successfully!")
 
-    elif option == "Evaluate Model":
-        rf_classifier = joblib.load('random_forest_model.pkl')
-        tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
-        data = load_data()
-        X_train, X_test, y_train, y_test = train_test_split(data['text'], data['label'], test_size=0.2, random_state=42)
-        X_test_preprocessed = X_test.apply(preprocess_text)
-        X_test_vect = tfidf_vectorizer.transform(X_test_preprocessed)
-        report, matrix = evaluate_model(rf_classifier, X_test_vect, y_test)
-        st.write("Classification Report:")
-        st.text(report)
-        st.write("Confusion Matrix:")
-        st.write(matrix)
+elif option == "Evaluate Model":
+    rf_classifier = joblib.load('random_forest_model.pkl')
+    tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
+    data = load_data()
+    X_train, X_test, y_train, y_test = train_test_split(data['text'], data['label'], test_size=0.2, random_state=42)
+    X_test_preprocessed = X_test.apply(preprocess_text)
+    X_test_vect = tfidf_vectorizer.transform(X_test_preprocessed)
+    report, matrix = evaluate_model(rf_classifier, X_test_vect, y_test)
+    st.write("Classification Report:")
+    st.text(report)
+    st.write("Confusion Matrix:")
+    st.write(matrix)
 
-    elif option == "Predict News":
-        rf_classifier = joblib.load('random_forest_model.pkl')
-        tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
-        sample_text = st.text_area("Enter a news article to classify:")
-        if st.button("Predict"):
-            sample_text_preprocessed = preprocess_text(sample_text)
-            sample_input_vect = tfidf_vectorizer.transform([sample_text_preprocessed])
-            predicted_label = rf_classifier.predict(sample_input_vect)
-            if predicted_label == 1:
-                st.write("The sample input is predicted to be **FAKE** news.")
-            else:
-                st.write("The sample input is predicted to be **REAL** news.")
+elif option == "Predict News":
+    rf_classifier = joblib.load('random_forest_model.pkl')
+    tfidf_vectorizer = joblib.load('tfidf_vectorizer.pkl')
+    sample_text = st.text_area("Enter a news article to classify:")
+    if st.button("Predict"):
+        sample_text_preprocessed = preprocess_text(sample_text)
+        sample_input_vect = tfidf_vectorizer.transform([sample_text_preprocessed])
+        predicted_label = rf_classifier.predict(sample_input_vect)
+        if predicted_label == 1:
+            st.write("The sample input is predicted to be **FAKE** news.")
+        else:
+            st.write("The sample input is predicted to be **REAL** news.")
+
 
 if __name__ == '__main__':
     main()
