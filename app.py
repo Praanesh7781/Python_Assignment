@@ -52,8 +52,8 @@ def evaluate_model(rf_classifier, X_test_vect, y_test):
 def main():
     st.title("Fake News Detection")
     
-    st.sidebar.title("Options")
-    option = st.sidebar.selectbox("Choose a function", ("Train Model", "Evaluate Model", "Predict News"))
+    st.sidebar.title("Navigation")
+option = st.sidebar.radio("Go to", ("Train Model", "Evaluate Model", "Predict News")
 
     if option == "Train Model":
         st.write("Training the model...")
