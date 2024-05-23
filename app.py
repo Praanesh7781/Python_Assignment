@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -178,4 +178,4 @@ def main():
 
 if __name__ == '__main__':
     main()
->>>>>>> 99fe26a468cc9adc5ffdf40274b1527f48b2472c
+
