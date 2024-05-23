@@ -13,7 +13,7 @@ import joblib
 nltk.download("stopwords")
 nltk.download("punkt")
 
-@st.cache(allow_output_mutation=True)
+@st.cache_data(allow_output_mutation=True)
 def load_data():
     fake_data = pd.read_csv('Fake.csv')
     real_data = pd.read_csv('True.csv')
