@@ -53,7 +53,7 @@ def main():
     st.title("Fake News Detection")
     
     st.sidebar.title("Navigation")
-option = st.sidebar.radio("Go to", ("Train Model", "Evaluate Model", "Predict News")
+option = st.sidebar.radio("Go to", ("Train Model", "Evaluate Model", "Predict News"))
 
     if option == "Train Model":
         st.write("Training the model...")
